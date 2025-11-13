@@ -68,6 +68,7 @@ export interface DevConfig {
   network: DevNetworkOptions
   partnerUrlsUpdated: boolean
   graphiqlPort: number
+  graphiqlAdvertiseUrl: string
   graphiqlKey?: string
 }
 
@@ -81,6 +82,7 @@ export async function setupDevProcesses({
   commandOptions,
   network,
   graphiqlPort,
+  graphiqlAdvertiseUrl,
   graphiqlKey,
 }: DevConfig): Promise<{
   processes: DevProcesses
@@ -104,7 +106,7 @@ export async function setupDevProcesses({
   const previewURL = anyPreviewableExtensions ? devConsoleURL : appPreviewUrl
 
   const graphiqlURL = shouldRenderGraphiQL
-    ? `http://localhost:${graphiqlPort}/graphiql${graphiqlKey ? `?key=${graphiqlKey}` : ''}`
+    ? graphiqlAdvertiseUrl ?? `http://localhost:${graphiqlPort}/graphiql${graphiqlKey ? `?key=${graphiqlKey}` : ''}`
     : undefined
 
   const devSessionStatusManager = new DevSessionStatusManager({isReady: false, previewURL, graphiqlURL})

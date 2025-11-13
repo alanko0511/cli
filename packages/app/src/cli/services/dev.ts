@@ -66,8 +66,10 @@ export interface DevOptions {
   tunnel: TunnelMode
   theme?: string
   themeExtensionPort?: number
+  themeExtensionAdvertiseUrl?: string
   notify?: string
   graphiqlPort?: number
+  graphiqlAdvertiseUrl?: string
   graphiqlKey?: string
 }
 
@@ -122,6 +124,7 @@ async function prepareForDev(commandOptions: DevOptions): Promise<DevConfig> {
   }
 
   const graphiqlPort = commandOptions.graphiqlPort ?? (await getAvailableTCPPort(ports.graphiql))
+  const graphiqlAdvertiseUrl = commandOptions.graphiqlAdvertiseUrl ?? `http://localhost:${graphiqlPort}`
   const portDetails: PortDetail[] = [
     {
       for: 'GraphiQL',
@@ -178,6 +181,7 @@ async function prepareForDev(commandOptions: DevOptions): Promise<DevConfig> {
     network,
     partnerUrlsUpdated,
     graphiqlPort,
+    graphiqlAdvertiseUrl,
     graphiqlKey: commandOptions.graphiqlKey,
   }
 }
@@ -430,6 +434,7 @@ async function launchDevProcesses({
     previewUrl,
     graphiqlUrl,
     graphiqlPort: config.graphiqlPort,
+    graphiqlAdvertiseUrl: config.graphiqlAdvertiseUrl,
     app,
     abortController,
     developerPreview: developerPreviewController(apiKey, developerPlatformClient),
