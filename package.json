@@ -79,7 +79,7 @@
     "tmp": "^0.2.5",
     "ts-node": "^10.9.1",
     "typescript": "5.8.3",
-    "vitest": "^3.1.4",
+    "vitest": "^4.1.0",
     "zod": "^3.24.1"
   },
   "workspaces": {
